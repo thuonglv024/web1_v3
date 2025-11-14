@@ -56,7 +56,7 @@ include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
 <!-- Main content: Registration form -->
-<main class="home-light" style="min-height: 100vh; display: flex; align-items: center;">
+<main style="display: flex; align-items: center; margin:-40px 0 -100px 0">
   <div class="container">
     <section class="auth-form">
       <div class="card">
@@ -69,19 +69,19 @@ include __DIR__ . '/../includes/navbar.php';
         <!-- Registration form -->
         <form method="post" class="auth-form-fields">
           <div class="form-group">
-            <label for="name">Full Name</label>
+            <label for="name" style="margin-bottom: -2px;">Full Name</label>
             <input id="name" name="name" type="text" value="<?php echo e($_POST['name'] ?? ''); ?>" required 
                    placeholder="Enter your full name">
           </div>
           
           <div class="form-group">
-            <label for="email">Email Address</label>
+            <label for="email" style="margin-bottom: -2px;">Email Address</label>
             <input id="email" name="email" type="email" value="<?php echo e($_POST['email'] ?? ''); ?>" required
                    placeholder="your@email.com">
           </div>
           
           <div class="form-group">
-            <label for="password">Create Password</label>
+            <label for="password"style="margin-bottom: -5px;">Create Password</label>
             <input id="password" name="password" type="password" required
                    placeholder="••••••••">
           </div>
