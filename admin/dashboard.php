@@ -14,7 +14,7 @@ include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
 <!-- Admin dashboard layout -->
-<main class="container home-dark">
+<main class="container home-light">
   <div class="layout-grid">
     <!-- Admin sidebar navigation -->
     <aside class="left-rail card">

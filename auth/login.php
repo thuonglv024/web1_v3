@@ -45,54 +45,51 @@ $contributors = $cstmt->fetchAll();
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
-<!-- Main content: Login form and sidebar -->
-<main class="container home-dark">
-  <div class="layout-grid two-col">
-    <section class="feed">
-      <div class="feed-header">
-        <h1>Login</h1>
-      </div>
-      <!-- Display error message -->
-      <?php if ($error) alert($error,'error'); ?>
-      <!-- Login form -->
+<!-- Main content: Login form -->
+<main class="home-light" style="min-height: 100vh; display: flex; align-items: center;">
+  <div class="container">
+    <section class="auth-form">
       <div class="card">
-        <form method="post">
-          <label>Email <input name="email" type="email" value="<?php echo e($_POST['email'] ?? ''); ?>" required></label>
-          <label>Password <input name="password" type="password" required></label>
-          <button class="primary" type="submit">Login</button>
+        <h1>Welcome Back</h1>
+        
+        <!-- Display error message -->
+        <?php if ($error) alert($error, 'error'); ?>
+        
+        <!-- Login form -->
+        <form method="post" class="auth-form-fields">
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input id="email" name="email" type="email" value="<?php echo e($_POST['email'] ?? ''); ?>" required
+                   placeholder="your@email.com">
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password</label>
+            <div style="position: relative;">
+              <input id="password" name="password" type="password" required
+                     placeholder="••••••••">
+            </div>
+          </div>
+          
+          <div class="form-group" style="text-align: right; margin: -10px 0 15px;">
+            <a href="#" style="font-size: 14px; color: var(--accent); text-decoration: none;">
+              Forgot password?
+            </a>
+          </div>
+          
+          <button type="submit" class="btn-primary">
+            Sign In
+          </button>
+          
+          <p class="auth-form-footer">
+            Don't have an account? 
+            <a href="<?php echo BASE_URL; ?>auth/register.php" class="auth-link">Register here</a>
+          </p>
         </form>
-        <p style="margin-top:10px;">Don't have an account? <a href="<?php echo BASE_URL; ?>auth/register.php">Register</a></p>
       </div>
     </section>
+    
 
-    <!-- Sidebar with trending topics and top contributors -->
-    <aside class="right-rail">
-      <div class="card">
-        <h3>Trending Topics</h3>
-        <?php if (!$trending): ?>
-          <p>No tags yet.</p>
-        <?php else: ?>
-          <div class="tag-cloud">
-            <?php foreach($trending as $t): ?>
-              <a class="tag-chip" href="#">#<?php echo e($t['name']); ?></a>
-            <?php endforeach; ?>
-          </div>
-        <?php endif; ?>
-      </div>
-
-      <div class="card">
-        <h3>Top Contributors</h3>
-        <?php if (!$contributors): ?>
-          <p>No contributor stats yet.</p>
-        <?php else: ?>
-          <ul class="contributors">
-            <?php foreach($contributors as $c): ?>
-              <li><span class="avatar">👤</span> <?php echo e($c['username']); ?> <span class="points"><?php echo (int)$c['points']; ?> pts</span></li>
-            <?php endforeach; ?>
-          </ul>
-        <?php endif; ?>
-      </div>
-    </aside>
   </div>
 </main>
 <!-- Include footer -->

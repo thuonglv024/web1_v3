@@ -6,10 +6,10 @@
 
 require_once __DIR__ . '/../includes/functions.php';
 
-// Sử dụng PHPMailer từ thư mục includes
-require_once __DIR__ . '/../includes/PHPMailer/PHPMailer.php';
-require_once __DIR__ . '/../includes/PHPMailer/SMTP.php';
-require_once __DIR__ . '/../includes/PHPMailer/Exception.php';
+// Sử dụng PHPMailer từ thư mục assets
+require_once __DIR__ . '/../assets/phpmailer/PHPMailer.php';
+require_once __DIR__ . '/../assets/phpmailer/SMTP.php';
+require_once __DIR__ . '/../assets/phpmailer/Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -85,7 +85,7 @@ $unreadCount = (int)$pdo->query("SELECT COUNT(*) FROM contacts WHERE is_read=0")
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
-<main class="container home-dark">
+<main class="container home-light">
   <div class="layout-grid">
     <?php include __DIR__ . '/sidebar.php'; ?>
 

@@ -9,7 +9,7 @@ $users = $pdo->query("SELECT id, username, email, role, created_at FROM users OR
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
-<main class="container home-dark">
+<main class="container home-light">
   <div class="layout-grid">
     <!-- Include admin sidebar -->
     <?php include __DIR__ . '/sidebar.php'; ?>

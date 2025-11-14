@@ -52,7 +52,7 @@ if (isPost()) {
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
-<main class="container home-dark">
+<main class="container home-light">
   <div class="edit-form">
     <h1>Edit Question</h1>
     

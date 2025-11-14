@@ -45,7 +45,7 @@ $contributors = $stTC->fetchAll();
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
-<main class="container home-dark">
+<main class="container home-light">
   <div class="layout-grid two-col">
     <section class="feed">
       <div class="feed-header">

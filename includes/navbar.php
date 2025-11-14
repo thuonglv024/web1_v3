@@ -53,7 +53,7 @@
     </ul>
     <!-- Global search form -->
     <form class="nav-search" method="get" action="<?php echo BASE_URL; ?>search/search.php" style="flex:1;max-width:320px;margin-left:16px;">
-      <input name="q" id="global-search" type="search" placeholder="Search questions or topics..." style="width:100%;background:#0b1220;color:#e5e7eb;border:1px solid #1f2937;border-radius:8px;padding:8px 12px;font-size:14px;" />
+      <input name="q" id="global-search" type="search" placeholder="Search questions or topics..." style="width:100%;background:#ffffff;color:#e5e7eb;border:1px solid #d1d5db;border-radius:8px;padding:8px 12px;font-size:14px;" />
       <input type="hidden" name="type" value="all">
       <button type="submit" style="display:none;">Search</button>
     </form>

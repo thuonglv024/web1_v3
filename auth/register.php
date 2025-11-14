@@ -55,60 +55,50 @@ $contributors = $cstmt->fetchAll();
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
-<!-- Main content: Registration form and sidebar -->
-<main class="container home-dark">
-  <div class="layout-grid two-col">
-    <section class="feed">
-      <div class="feed-header">
-        <h1>Register</h1>
-      </div>
-      <!-- Display error or success messages -->
-      <?php if ($error) alert($error, 'error'); ?>
-      <?php if ($success) alert($success, 'success'); ?>
-      <!-- Registration form -->
+<!-- Main content: Registration form -->
+<main class="home-light" style="min-height: 100vh; display: flex; align-items: center;">
+  <div class="container">
+    <section class="auth-form">
       <div class="card">
-        <form method="post">
-          <label>Name <input name="name" value="<?php echo e($_POST['name'] ?? ''); ?>" required></label>
-          <label>Email <input name="email" type="email" value="<?php echo e($_POST['email'] ?? ''); ?>" required></label>
-          <label>Password <input name="password" type="password" required></label>
-          <button class="primary" type="submit">Create Account</button>
+        <h1>Create Your Account</h1>
+        
+        <!-- Display error or success messages -->
+        <?php if ($error) alert($error, 'error'); ?>
+        <?php if ($success) alert($success, 'success'); ?>
+        
+        <!-- Registration form -->
+        <form method="post" class="auth-form-fields">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input id="name" name="name" type="text" value="<?php echo e($_POST['name'] ?? ''); ?>" required 
+                   placeholder="Enter your full name">
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input id="email" name="email" type="email" value="<?php echo e($_POST['email'] ?? ''); ?>" required
+                   placeholder="your@email.com">
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Create Password</label>
+            <input id="password" name="password" type="password" required
+                   placeholder="••••••••">
+          </div>
+          
+          <button type="submit" class="btn-primary">
+            Create Account
+          </button>
+          
+          <p class="auth-form-footer">
+            Already have an account? 
+            <a href="<?php echo BASE_URL; ?>auth/login.php" class="auth-link">Sign in here</a>
+          </p>
         </form>
-        <p style="margin-top:10px;">Already have an account? <a href="<?php echo BASE_URL; ?>auth/login.php">Login</a></p>
       </div>
     </section>
 
-    <!-- Sidebar with trending topics and top contributors -->
-    <aside class="right-rail">
-      <div class="card">
-        <h3>Trending Topics</h3>
-        <?php if (!$trending): ?>
-          <p>No tags yet.</p>
-        <?php else: ?>
-          <div class="tag-cloud">
-            <?php foreach($trending as $t): ?>
-              <a class="tag-chip" href="#">#<?php echo e($t['name']); ?></a>
-            <?php endforeach; ?>
-          </div>
-        <?php endif; ?>
-      </div>
 
-      <div class="card">
-        <h3>Top Contributors</h3>
-        <?php if (!$contributors): ?>
-          <p>No contributor stats yet.</p>
-        <?php else: ?>
-          <ul class="contributors" style="list-style:none;padding:0;margin:0;">
-            <?php foreach($contributors as $c): ?>
-              <li style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #374151;overflow:hidden;">
-                <span class="avatar">👤</span> 
-                <span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"><?php echo e($c['username']); ?></span> 
-                <span class="points" style="flex-shrink:0;"><?php echo (int)$c['points']; ?> pts</span>
-              </li>
-            <?php endforeach; ?>
-          </ul>
-        <?php endif; ?>
-      </div>
-    </aside>
   </div>
 </main>
 <!-- Include footer -->

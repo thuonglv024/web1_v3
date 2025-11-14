@@ -50,7 +50,7 @@ $trending = $trendingStmt->fetchAll();
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
-<main class="container home-dark">
+<main class="container home-light">
   <div class="layout-grid two-col">
     <section class="feed">
       <div class="feed-header">
@@ -63,7 +63,7 @@ include __DIR__ . '/../includes/navbar.php';
         <form method="post" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:16px;">
           <!-- Title -->
           <div>
-            <label style="display:block;margin-bottom:6px;color:#e5e7eb;font-weight:500;">Title <span style="color:#ef4444;">*</span></label>
+            <label style="display:block;margin-bottom:6px;color:#696969;font-weight:500;">Title <span style="color:#ef4444;">*</span></label>
             <input name="title" placeholder="What's your programming question? Be specific." required style="width:100%;background:#0b1220;color:#e5e7eb;border:1px solid #1f2937;border-radius:8px;padding:12px;font-size:15px;" />
             <p style="color:#9ca3af;font-size:12px;margin:4px 0 0;">Be specific and imagine you're asking a question to another person</p>
           </div>

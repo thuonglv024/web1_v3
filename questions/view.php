@@ -49,7 +49,7 @@ if (is_logged_in()){
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
-<main class="container home-dark">
+<main class="container home-light">
   <div class="layout-grid two-col">
     <section class="feed">
       <!-- Question Card -->
@@ -98,7 +98,7 @@ include __DIR__ . '/../includes/navbar.php';
 
         <!-- Question Content -->
         <div style="padding:16px 0;border-top:1px solid #1f2937;border-bottom:1px solid #1f2937;">
-          <div style="color:#e5e7eb;line-height:1.7;font-size:15px;"><?php echo nl2br(e($q['content'])); ?></div>
+          <div style="color:#696969;line-height:1.7;font-size:15px;"><?php echo nl2br(e($q['content'])); ?></div>
         </div>
       </article>
 

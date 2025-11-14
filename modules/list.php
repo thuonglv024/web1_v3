@@ -22,7 +22,7 @@ $cstmt = $pdo->query("SELECT u.username, COUNT(a.id) AS points
                       LIMIT 5");
 $contributors = $cstmt->fetchAll();
 ?>
-<main class="container home-dark">
+<main class="container home-light">
   <div class="layout-grid two-col">
     <section class="feed">
       <div class="feed-header">

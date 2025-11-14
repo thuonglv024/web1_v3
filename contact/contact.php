@@ -16,35 +16,32 @@ if (isPost()) {
   } else {
     $stmt = $pdo->prepare("INSERT INTO contacts (name, email, message) VALUES (?,?,?)");
     $stmt->execute([$name, $email, $message]);
-    // Try sending an email via PHPMailer SMTP if available; otherwise fallback to mail()
+    // Try sending an email using EmailService
+    $emailService = new EmailService();
     $subject = '[Q&A Contact] New message from ' . $name;
-    $sent = false;
-    $autoload = __DIR__ . '/../vendor/autoload.php';
-    if (file_exists($autoload)) {
-      require_once $autoload;
-      try {
-        $mailer = new PHPMailer\PHPMailer\PHPMailer(true);
-        $mailer->isSMTP();
-        $mailer->Host = SMTP_HOST;
-        $mailer->SMTPAuth = true;
-        $mailer->Username = SMTP_USER;
-        $mailer->Password = SMTP_PASS;
-        $mailer->SMTPSecure = SMTP_SECURE; // 'tls' or 'ssl'
-        $mailer->Port = SMTP_PORT;
-        $mailer->setFrom($email, $name);
-        $mailer->addAddress(ADMIN_EMAIL);
-        $mailer->addReplyTo($email, $name);
-        $mailer->Subject = $subject;
-        $mailer->Body = $message;
-        $mailer->send();
-        $sent = true;
-      } catch (Throwable $e) {
-        // fallback below
-      }
-    }
+    $messageBody = "Name: $name\nEmail: $email\n\n$message";
+    
+    // Send email using the service
+    $result = $emailService->sendCustomEmail(
+        ADMIN_EMAIL,
+        $subject,
+        nl2br(htmlspecialchars($messageBody)), // Convert newlines to <br> for HTML email
+        'Website Contact Form',
+        $email,
+        $name
+    );
+    
+    $sent = $result['success'];
+    
+    // Log any errors
     if (!$sent) {
-      $headers = 'From: ' . $email . "\r\n" . 'Reply-To: ' . $email;
-      @mail(ADMIN_EMAIL, $subject, $message, $headers);
+        error_log('Mailer Error: ' . $result['message']);
+        
+        // Fallback to PHP mail() if EmailService fails
+        $headers = "From: $name <$email>\r\n";
+        $headers .= "Reply-To: $email\r\n";
+        $headers .= "X-Mailer: PHP/" . phpversion();
+        $sent = mail(ADMIN_EMAIL, $subject, $message, $headers);
     }
     $success = 'Your message has been sent. Thank you!';
   }
@@ -70,7 +67,7 @@ $contributors = $cstmt->fetchAll();
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
-<main class="container home-dark">
+<main class="container home-light">
   <section class="contact-two-col">
     <div class="contact-left">
       <?php if ($error) alert($error, 'error'); ?>

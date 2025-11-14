@@ -102,7 +102,7 @@ $tstmt = $pdo->query("SELECT t.name, COUNT(*) cnt
                       LIMIT 8");
 $trending = $tstmt->fetchAll();
 ?>
-<main class="container home-dark">
+<main class="container home-light">
   <div class="layout-grid two-col">
     <section class="feed">
       <!-- Header -->
