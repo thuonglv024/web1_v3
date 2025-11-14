@@ -5,7 +5,59 @@
  */
 
 require_once __DIR__ . '/../includes/functions.php';
+
+// Sử dụng PHPMailer từ thư mục includes
+require_once __DIR__ . '/../includes/PHPMailer/PHPMailer.php';
+require_once __DIR__ . '/../includes/PHPMailer/SMTP.php';
+require_once __DIR__ . '/../includes/PHPMailer/Exception.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 ensure_admin();
+
+// Handle email reply
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_email'])) {
+    $to = $_POST['to_email'];
+    $subject = $_POST['subject'];
+    $message = $_POST['message'];
+    $from = 'thuong.workspace@gmail.com';
+    $from_name = 'Admin';
+
+    $mail = new PHPMailer(true);
+    
+    try {
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'thuonglv.workspace@gmail.com';
+        $mail->Password = 'bwapxnrsfhzsbuyg'; // You need to use App Password from Google Account
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+        $mail->CharSet = 'UTF-8';
+
+        // Recipients
+        $mail->setFrom($from, $from_name);
+        $mail->addAddress($to);
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = $subject;
+        $mail->Body    = nl2br(htmlspecialchars($message));
+        $mail->AltBody = $message;
+
+        $mail->send();
+        $_SESSION['flash_message'] = 'Email đã được gửi thành công!';
+        $_SESSION['flash_type'] = 'success';
+    } catch (Exception $e) {
+        $_SESSION['flash_message'] = "Không thể gửi email. Lỗi: {$mail->ErrorInfo}";
+        $_SESSION['flash_type'] = 'error';
+    }
+    
+    redirect('admin/manage_contacts.php');
+}
 
 // Handle delete action
 if (isset($_GET['delete'])) {
@@ -94,14 +146,47 @@ include __DIR__ . '/../includes/navbar.php';
                 <p style="color:#cbd5e1;line-height:1.6;margin:0;white-space:pre-wrap;"><?php echo e($c['message']); ?></p>
               </div>
 
-              <!-- Reply Button -->
+              <!-- Reply Button and Form -->
               <div style="margin-top:12px;">
-                <a href="../includes/comingSoon.php" 
-                   class="btn-ask" 
-                   style="padding:8px 16px;font-size:13px;display:inline-block;">
+                <button onclick="toggleReplyForm(<?php echo $c['id']; ?>)" 
+                        class="btn-ask" 
+                        style="padding:8px 16px;font-size:13px;display:inline-block;cursor:pointer;">
                    Reply via Email
-                </a>
+                </button>
+                
+                <div id="replyForm<?php echo $c['id']; ?>" style="display:none; margin-top:12px; background:#0b1220; padding:16px; border-radius:8px; border:1px solid #1f2937;">
+                  <form method="POST" action="">
+                    <input type="hidden" name="to_email" value="<?php echo e($c['email']); ?>">
+                    <div style="margin-bottom:12px;">
+                      <input type="text" name="subject" placeholder="Subject" required 
+                             style="width:100%; padding:8px 12px; background:#111827; border:1px solid #1f2937; border-radius:4px; color:#e5e7eb; margin-bottom:8px;">
+                    </div>
+                    <div style="margin-bottom:12px;">
+                      <textarea name="message" rows="4" required 
+                                style="width:100%; padding:8px 12px; background:#111827; border:1px solid #1f2937; border-radius:4px; color:#e5e7eb; resize:vertical;"></textarea>
+                    </div>
+                    <button type="submit" name="send_email" 
+                            style="padding:8px 16px; background:#3b82f6; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:500;">
+                      Send Email
+                    </button>
+                    <button type="button" onclick="toggleReplyForm(<?php echo $c['id']; ?>)" 
+                            style="padding:8px 16px; margin-left:8px; background:#6b7280; color:white; border:none; border-radius:4px; cursor:pointer;">
+                      Cancel
+                    </button>
+                  </form>
+                </div>
               </div>
+              
+              <script>
+              function toggleReplyForm(id) {
+                const form = document.getElementById('replyForm' + id);
+                if (form.style.display === 'none') {
+                  form.style.display = 'block';
+                } else {
+                  form.style.display = 'none';
+                }
+              }
+              </script>
             </article>
           <?php endforeach; ?>
         </div>

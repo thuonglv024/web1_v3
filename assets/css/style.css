@@ -584,8 +584,7 @@ button.primary:hover {
   .left-rail{ display:none; }
 }
 
-/* Navbar scrolled state */
-.navbar.scrolled{ background:rgba(11,18,32,.92); box-shadow:0 8px 24px rgba(0,0,0,.35); }
+/* Navbar scrolled state - Đã xóa hiệu ứng đổi màu khi cuộn */
 
 /* Forms (Contact page and global) */
 form label{ display:block; margin:0 0 10px; color:var(--text-secondary); font-size:14px; }

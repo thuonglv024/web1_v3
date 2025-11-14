@@ -22,14 +22,5 @@ document.addEventListener('DOMContentLoaded',()=>{
     });
   }
 
-  // Header: add shadow/opacity when scrolled
-  const nav = document.querySelector('.navbar');
-  if (nav) {
-    const onScroll = () => {
-      if (window.scrollY > 8) nav.classList.add('scrolled');
-      else nav.classList.remove('scrolled');
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-  }
+  // Đã xóa hiệu ứng đổi màu khi cuộn thanh điều hướng
 });
