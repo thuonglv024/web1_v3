@@ -55,16 +55,16 @@ include __DIR__ . '/../includes/navbar.php';
       <!-- Status Filter Tabs -->
       <div class="card mb-20" style="padding:12px;">
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <a href="?status=all" class="tag-chip <?php echo $statusFilter==='all'?'tag-chip-active':''; ?>" style="padding:8px 14px;">
+            <a href="?status=all" class="tag-chip <?php echo $statusFilter==='all'?'tag-chip-active':''; ?>">
               All (<?php echo $totalCount; ?>)
             </a>
-            <a href="?status=pending" class="tag-chip <?php echo $statusFilter==='pending'?'tag-chip-active':''; ?>" style="padding:8px 14px;border-color:<?php echo $statusFilter==='pending'?'#f59e0b':'#1f2937'; ?>;">
+            <a href="?status=pending" class="tag-chip <?php echo $statusFilter==='pending'?'tag-chip-active tag-chip-warning':''; ?>">
               Pending (<?php echo $pendingCount; ?>)
             </a>
-            <a href="?status=approved" class="tag-chip <?php echo $statusFilter==='approved'?'tag-chip-active':''; ?>" style="padding:8px 14px;border-color:<?php echo $statusFilter==='approved'?'#22c55e':'#1f2937'; ?>;">
+            <a href="?status=approved" class="tag-chip <?php echo $statusFilter==='approved'?'tag-chip-active tag-chip-success':''; ?>">
               Approved (<?php echo $approvedCount; ?>)
             </a>
-            <a href="?status=rejected" class="tag-chip <?php echo $statusFilter==='rejected'?'tag-chip-active':''; ?>" style="padding:8px 14px;border-color:<?php echo $statusFilter==='rejected'?'#dc2626':'#1f2937'; ?>;">
+            <a href="?status=rejected" class="tag-chip <?php echo $statusFilter==='rejected'?'tag-chip-active tag-chip-delete':''; ?>">
               Rejected (<?php echo $rejectedCount; ?>)
             </a>
         </div>
@@ -103,15 +103,15 @@ include __DIR__ . '/../includes/navbar.php';
                     <span class="status-pill <?php echo $statusClass; ?>"><?php echo e($r['status']); ?></span>
                   </td>
                   <td class="table-actions">
-                    <a href="<?php echo BASE_URL; ?>questions/view.php?id=<?php echo (int)$r['id']; ?>" class="tag-chip">View</a>
+                    <a href="<?php echo BASE_URL; ?>questions/view.php?id=<?php echo (int)$r['id']; ?>" class="tag-chip tag-chip-small">View</a>
                     <?php if ($r['status'] !== 'approved'): ?>
-                      <a href="<?php echo BASE_URL; ?>questions/approve.php?id=<?php echo (int)$r['id']; ?>&action=approve" class="tag-chip" style="border-color:#22c55e;" onclick="return confirm('Approve this question?')">Approve</a>
+                      <a href="<?php echo BASE_URL; ?>questions/approve.php?id=<?php echo (int)$r['id']; ?>&action=approve" class="tag-chip tag-chip-small tag-chip-success" onclick="return confirm('Approve this question?')">Approve</a>
                     <?php endif; ?>
                     <?php if ($r['status'] !== 'rejected'): ?>
-                      <a href="<?php echo BASE_URL; ?>questions/approve.php?id=<?php echo (int)$r['id']; ?>&action=reject" class="tag-chip" style="border-color:#dc2626;" onclick="return confirm('Reject this question?')">Reject</a>
+                      <a href="<?php echo BASE_URL; ?>questions/approve.php?id=<?php echo (int)$r['id']; ?>&action=reject" class="tag-chip tag-chip-small tag-chip-delete" onclick="return confirm('Reject this question?')">Reject</a>
                     <?php endif; ?>
-                    <a href="<?php echo BASE_URL; ?>questions/edit.php?id=<?php echo (int)$r['id']; ?>" class="tag-chip">Edit</a>
-                    <a href="<?php echo BASE_URL; ?>questions/delete.php?id=<?php echo (int)$r['id']; ?>" class="tag-chip" style="border-color:#7f1d1d;" onclick="return confirm('Delete this question?')">Delete</a>
+                    <a href="<?php echo BASE_URL; ?>questions/edit.php?id=<?php echo (int)$r['id']; ?>" class="tag-chip tag-chip-small">Edit</a>
+                    <a href="<?php echo BASE_URL; ?>questions/delete.php?id=<?php echo (int)$r['id']; ?>" class="tag-chip tag-chip-small tag-chip-delete" onclick="return confirm('Delete this question?')">Delete</a>
                   </td>
                 </tr>
               <?php endforeach; ?>

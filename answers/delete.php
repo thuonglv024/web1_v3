@@ -11,7 +11,7 @@ if ($id > 0) {
     if (is_admin() || (is_logged_in() && (int)$row['user_id'] === (int)$_SESSION['user_id'])) {
       $del = $pdo->prepare("DELETE FROM answers WHERE id=?");
       $del->execute([$id]);
-      $_SESSION['flash_message'] = 'Câu trả lời đã được xóa thành công!';
+      $_SESSION['flash_message'] = 'Answer deleted successfully!';
       $_SESSION['flash_type'] = 'success';
       // Redirect back to the previous page or fallback to question view
       if (isset($_SERVER['HTTP_REFERER'])) {

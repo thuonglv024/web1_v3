@@ -68,14 +68,10 @@ include __DIR__ . '/../includes/navbar.php';
       <?php else: ?>
         <div class="tag-cloud">
           <?php foreach($tags as $t): ?>
-            <div class="card" style="display:inline-block;margin:6px;">
-              <span class="tag-chip tag-chip-active">#<?php echo e($t['name']); ?></span>
-              <?php if (is_admin()): ?>
-                <div style="margin-top:6px;">
-                  <a href="<?php echo BASE_URL; ?>tags/delete.php?id=<?php echo (int)$t['id']; ?>" onclick="return confirm('Delete this tag?')">Delete</a>
-                </div>
-              <?php endif; ?>
-            </div>
+            <span class="tag-chip tag-chip-active">#<?php echo e($t['name']); ?></span>
+            <?php if (is_admin()): ?>
+              <a href="<?php echo BASE_URL; ?>tags/delete.php?id=<?php echo (int)$t['id']; ?>" class="tag-chip tag-chip-small tag-chip-delete" onclick="return confirm('Delete this tag?')">Delete</a>
+            <?php endif; ?>
           <?php endforeach; ?>
         </div>
       <?php endif; ?>

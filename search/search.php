@@ -133,16 +133,16 @@ include __DIR__ . '/../includes/navbar.php';
         <!-- Filter Tabs -->
         <div class="card" style="margin-bottom:16px;padding:12px;">
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <a href="?q=<?php echo urlencode($query); ?>&type=all" class="tag-chip <?php echo $filterType==='all'?'tag-chip-active':''; ?>" style="padding:8px 14px;">
+            <a href="?q=<?php echo urlencode($query); ?>&type=all" class="tag-chip <?php echo $filterType==='all'?'tag-chip-active':''; ?>">
               All (<?php echo $totalResults; ?>)
             </a>
-            <a href="?q=<?php echo urlencode($query); ?>&type=questions" class="tag-chip <?php echo $filterType==='questions'?'tag-chip-active':''; ?>" style="padding:8px 14px;">
+            <a href="?q=<?php echo urlencode($query); ?>&type=questions" class="tag-chip <?php echo $filterType==='questions'?'tag-chip-active':''; ?>">
               Questions (<?php echo count($questionResults); ?>)
             </a>
-            <a href="?q=<?php echo urlencode($query); ?>&type=tags" class="tag-chip <?php echo $filterType==='tags'?'tag-chip-active':''; ?>" style="padding:8px 14px;">
+            <a href="?q=<?php echo urlencode($query); ?>&type=tags" class="tag-chip <?php echo $filterType==='tags'?'tag-chip-active':''; ?>">
               Tags (<?php echo count($tagResults); ?>)
             </a>
-            <a href="?q=<?php echo urlencode($query); ?>&type=modules" class="tag-chip <?php echo $filterType==='modules'?'tag-chip-active':''; ?>" style="padding:8px 14px;">
+            <a href="?q=<?php echo urlencode($query); ?>&type=modules" class="tag-chip <?php echo $filterType==='modules'?'tag-chip-active':''; ?>">
               Modules (<?php echo count($moduleResults); ?>)
             </a>
           </div>
@@ -176,7 +176,7 @@ include __DIR__ . '/../includes/navbar.php';
                       <?php if (!empty($q['tags'])): ?>
                         <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">
                           <?php foreach (explode(',', $q['tags']) as $tg): ?>
-                            <span class="tag-chip" style="font-size:11px;padding:4px 8px;">#<?php echo e($tg); ?></span>
+                            <span class="tag-chip tag-chip-small">#<?php echo e($tg); ?></span>
                           <?php endforeach; ?>
                         </div>
                       <?php endif; ?>
@@ -194,9 +194,9 @@ include __DIR__ . '/../includes/navbar.php';
               <h3 style="margin:0 0 14px;">Tags (<?php echo count($tagResults); ?>)</h3>
               <div class="tag-cloud">
                 <?php foreach($tagResults as $t): ?>
-                  <a class="tag-chip" href="#" style="display:inline-flex;align-items:center;gap:6px;">
+                  <a class="tag-chip" href="#">
                     #<?php echo e($t['name']); ?>
-                    <span style="background:#1f2937;padding:2px 6px;border-radius:999px;font-size:10px;"><?php echo (int)$t['question_count']; ?></span>
+                    <span style="background:var(--bg-strong);padding:2px 6px;border-radius:999px;font-size:10px;margin-left:4px;"><?php echo (int)$t['question_count']; ?></span>
                   </a>
                 <?php endforeach; ?>
               </div>

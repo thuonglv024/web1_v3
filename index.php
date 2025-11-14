@@ -183,7 +183,7 @@ include __DIR__ . '/includes/navbar.php';
               <?php if (!empty($questionTags)): ?>
                 <div class="flex gap-6 flex-wrap mt-12" style="padding-top:12px;border-top:1px solid #1f2937;">
                   <?php foreach ($questionTags as $tag): ?>
-                    <span class="tag-chip" style="font-size:11px;padding:4px 10px;color:#ffff">#<?php echo e($tag); ?></span>
+                    <span class="tag-chip tag-chip-small">#<?php echo e($tag); ?></span>
                   <?php endforeach; ?>
                 </div>
               <?php endif; ?>

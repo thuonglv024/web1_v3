@@ -69,10 +69,10 @@ include __DIR__ . '/../includes/navbar.php';
             <h1 style="margin:0 0 8px;font-size:32px;"><?php echo e($user['username']); ?></h1>
             <p style="color:#9ca3af;margin:0 0 12px;"><?php echo e($user['email']); ?></p>
             <div style="display:flex;gap:16px;flex-wrap:wrap;">
-              <span class="tag-chip" style="background:#111827;border-color:#374151;">
+              <span class="tag-chip">
                 <?php echo ucfirst($user['role']); ?>
               </span>
-              <span class="tag-chip" style="background:#111827;border-color:#374151;">
+              <span class="tag-chip">
                 Member since <?php echo date('M Y', strtotime($user['created_at'])); ?>
               </span>
             </div>
@@ -115,7 +115,7 @@ include __DIR__ . '/../includes/navbar.php';
               </div>
             <?php endforeach; ?>
           </div>
-          <a href="<?php echo BASE_URL; ?>questions/list.php" class="tag-chip" style="display:inline-block;margin-top:10px;">View all questions →</a>
+          <a href="<?php echo BASE_URL; ?>questions/list.php" class="tag-chip" style="margin-top:10px;">View all questions →</a>
         <?php endif; ?>
       </div>
 
@@ -187,9 +187,9 @@ include __DIR__ . '/../includes/navbar.php';
       <div class="card">
         <h3>Quick Actions</h3>
         <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
-          <a href="<?php echo BASE_URL; ?>users/edit.php" class="tag-chip" style="text-align:center;display:block;">Edit Profile</a>
-          <a href="<?php echo BASE_URL; ?>questions/list.php" class="tag-chip" style="text-align:center;display:block;">Browse Questions</a>
-          <a href="<?php echo BASE_URL; ?>tags/list.php" class="tag-chip" style="text-align:center;display:block;">Browse Tags</a>
+          <a href="<?php echo BASE_URL; ?>users/edit.php" class="tag-chip tag-chip-block">Edit Profile</a>
+          <a href="<?php echo BASE_URL; ?>questions/list.php" class="tag-chip tag-chip-block">Browse Questions</a>
+          <a href="<?php echo BASE_URL; ?>tags/list.php" class="tag-chip tag-chip-block">Browse Tags</a>
         </div>
       </div>
     </aside>

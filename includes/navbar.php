@@ -6,7 +6,7 @@
     $uri = $_SERVER['REQUEST_URI'] ?? '/';
     $current_path = parse_url($uri, PHP_URL_PATH);
     
-    // Xác định trang hiện tại
+    // Determine current page
     $is_home = ($current_path === '/' || $current_path === BASE_URL || $current_path === '/COMP1841/courseworkWeb1V2/');
     
     // Function to check active state
@@ -43,12 +43,12 @@
     <a href="<?php echo BASE_URL; ?>" class="brand"><?php echo e(APP_NAME); ?></a>
     <!-- Main navigation links -->
     <ul class="nav">
-      <li><a class="<?php echo $is(BASE_URL); ?> tag-chip" href="<?php echo BASE_URL; ?>" style="<?php echo $is(BASE_URL)?'font-size:16px':''; ?>">Home</a></li>
-      <li><a class="<?php echo $is('questions'); ?> tag-chip" href="<?php echo BASE_URL; ?>questions/list.php" style="<?php echo $is(BASE_URL)?'font-size:16px':''; ?>">Questions</a></li>
-      <li><a class="<?php echo $is('contact'); ?> tag-chip" href="<?php echo BASE_URL; ?>contact/contact.php" style="<?php echo $is(BASE_URL)?'font-size:16px':''; ?>">Contact</a></li>
+      <li><a class="<?php echo $is(BASE_URL); ?> tag-chip" href="<?php echo BASE_URL; ?>">Home</a></li>
+      <li><a class="<?php echo $is('questions'); ?> tag-chip" href="<?php echo BASE_URL; ?>questions/list.php">Questions</a></li>
+      <li><a class="<?php echo $is('contact'); ?> tag-chip" href="<?php echo BASE_URL; ?>contact/contact.php">Contact</a></li>
       <!-- Admin link if user is admin -->
       <?php if (is_admin()): ?>
-        <li><a class="<?php echo $is('admin'); ?> tag-chip" href="<?php echo BASE_URL; ?>admin/dashboard.php" style="<?php echo $is(BASE_URL)?'font-size:16px':''; ?>">Admin</a></li>
+        <li><a class="<?php echo $is('admin'); ?> tag-chip" href="<?php echo BASE_URL; ?>admin/dashboard.php">Admin</a></li>
       <?php endif; ?>
     </ul>
     <!-- Global search form -->

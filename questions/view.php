@@ -36,8 +36,10 @@ $trendingStmt = $pdo->query("SELECT t.id, t.name, COUNT(*) cnt
                       LIMIT 8");
 $trending = $trendingStmt->fetchAll();
 
-// score and current user's vote
-$score = (int)$pdo->query("SELECT COALESCE(SUM(value),0) FROM question_votes WHERE question_id=".$id)->fetchColumn();
+// Get vote score and current user's vote
+$scoreStmt = $pdo->prepare("SELECT COALESCE(SUM(value),0) FROM question_votes WHERE question_id=?");
+$scoreStmt->execute([$id]);
+$score = (int)$scoreStmt->fetchColumn();
 $myVote = null;
 if (is_logged_in()){
   $vs = $pdo->prepare("SELECT value FROM question_votes WHERE user_id=? AND question_id=?");
@@ -66,8 +68,8 @@ include __DIR__ . '/../includes/navbar.php';
           </div>
           <?php if (is_logged_in() && ((int)$q['user_id'] === (int)$_SESSION['user_id'] || is_admin())): ?>
             <div style="display:flex;gap:8px;">
-              <a href="<?php echo BASE_URL; ?>questions/edit.php?id=<?php echo $id; ?>" class="tag-chip" style="padding:6px 12px;font-size:12px;">Edit</a>
-              <a href="<?php echo BASE_URL; ?>questions/delete.php?id=<?php echo $id; ?>" class="tag-chip" style="padding:6px 12px;font-size:12px;border-color:#dc2626;" onclick="return confirm('Delete this question?')">Delete</a>
+              <a href="<?php echo BASE_URL; ?>questions/edit.php?id=<?php echo $id; ?>" class="tag-chip tag-chip-small">Edit</a>
+              <a href="<?php echo BASE_URL; ?>questions/delete.php?id=<?php echo $id; ?>" class="tag-chip tag-chip-small tag-chip-delete" onclick="return confirm('Delete this question?')">Delete</a>
             </div>
           <?php endif; ?>
         </div>
@@ -84,7 +86,7 @@ include __DIR__ . '/../includes/navbar.php';
         <?php if ($tags): ?>
           <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
             <?php foreach($tags as $tg): ?>
-              <span class="tag-chip" style="font-size:12px;">#<?php echo e($tg); ?></span>
+              <span class="tag-chip tag-chip-small">#<?php echo e($tg); ?></span>
             <?php endforeach; ?>
           </div>
         <?php endif; ?>
@@ -129,8 +131,8 @@ include __DIR__ . '/../includes/navbar.php';
                   </div>
                   <?php if (is_logged_in() && ((int)$ans['user_id'] === (int)$_SESSION['user_id'] || is_admin())): ?>
                     <div style="display:flex;gap:8px;">
-                      <a href="<?php echo BASE_URL; ?>answers/edit.php?id=<?php echo $ans['id']; ?>" class="tag-chip" style="padding:4px 10px;font-size:11px;">Edit</a>
-                      <a href="<?php echo BASE_URL; ?>answers/delete.php?id=<?php echo $ans['id']; ?>" class="tag-chip" style="padding:4px 10px;font-size:11px;border-color:#dc2626;" onclick="return confirm('Delete this answer?')">Delete</a>
+                      <a href="<?php echo BASE_URL; ?>answers/edit.php?id=<?php echo $ans['id']; ?>" class="tag-chip tag-chip-small">Edit</a>
+                      <a href="<?php echo BASE_URL; ?>answers/delete.php?id=<?php echo $ans['id']; ?>" class="tag-chip tag-chip-small tag-chip-delete" onclick="return confirm('Delete this answer?')">Delete</a>
                     </div>
                   <?php endif; ?>
                 </div>
@@ -148,10 +150,10 @@ include __DIR__ . '/../includes/navbar.php';
         <h3>Question Actions</h3>
         <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
           <?php if (is_logged_in()): ?>
-            <a href="<?php echo BASE_URL; ?>answers/add.php?question_id=<?php echo $q['id']; ?>" class="tag-chip" style="text-align:center;display:block;border-color:#22c55e;">Answer Question</a>
+            <a href="<?php echo BASE_URL; ?>answers/add.php?question_id=<?php echo $q['id']; ?>" class="tag-chip tag-chip-success tag-chip-block">Answer Question</a>
           <?php endif; ?>
-          <a href="<?php echo BASE_URL; ?>questions/list.php" class="tag-chip" style="text-align:center;display:block;">Go to Questions</a>
-          <a href="<?php echo BASE_URL; ?>users/profile.php" class="tag-chip" style="text-align:center;display:block;">⬅ Back </a>
+          <a href="<?php echo BASE_URL; ?>questions/list.php" class="tag-chip tag-chip-block">Go to Questions</a>
+          <a href="<?php echo BASE_URL; ?>users/profile.php" class="tag-chip tag-chip-block">⬅ Back</a>
         </div>
       </div>
 
@@ -178,7 +180,7 @@ include __DIR__ . '/../includes/navbar.php';
         <?php else: ?>
           <div class="tag-cloud">
             <?php foreach($trending as $t): ?>
-              <a class="tag-chip" href="<?php echo BASE_URL; ?>tags/list.php?tags=<?php echo (int)$t['id']; ?>" style="cursor:pointer;">#<?php echo e($t['name']); ?></a>
+              <a class="tag-chip" href="<?php echo BASE_URL; ?>tags/list.php?tags=<?php echo (int)$t['id']; ?>">#<?php echo e($t['name']); ?></a>
             <?php endforeach; ?>
           </div>
         <?php endif; ?>

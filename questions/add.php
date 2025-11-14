@@ -98,7 +98,7 @@ include __DIR__ . '/../includes/navbar.php';
             <label style="display:block;margin-bottom:10px;color:#e5e7eb;font-weight:500;">Tags (Click to select)</label>
             <div id="tags-container" style="display:flex;flex-wrap:wrap;gap:8px;">
               <?php foreach($allTags as $t): ?>
-                <span class="tag-selector" data-tag-id="<?php echo (int)$t['id']; ?>" style="display:inline-block;padding:8px 14px;background:#0b1220;border:1px solid #1f2937;border-radius:999px;cursor:pointer;transition:all .18s ease;color:#e5e7eb;font-size:13px;user-select:none;" onmouseover="if(!this.classList.contains('selected')) this.style.borderColor='#22c55e'" onmouseout="if(!this.classList.contains('selected')) this.style.borderColor='#1f2937'">
+                <span class="tag-selector" data-tag-id="<?php echo (int)$t['id']; ?>">
                   #<?php echo e($t['name']); ?>
                 </span>
               <?php endforeach; ?>
@@ -147,7 +147,7 @@ include __DIR__ . '/../includes/navbar.php';
           <!-- Submit Button -->
           <div style="display:flex;gap:12px;padding-top:16px;border-top:1px solid #1f2937;">
             <button type="submit" class="btn-ask" style="padding:12px 24px;font-size:15px;flex:1;">Post Question</button>
-            <a href="<?php echo BASE_URL; ?>questions/list.php" class="tag-chip" style="padding:12px 24px;font-size:15px;text-align:center;display:flex;align-items:center;justify-content:center;text-decoration:none;">Cancel</a>
+            <a href="<?php echo BASE_URL; ?>questions/list.php" class="tag-chip tag-chip-block">Cancel</a>
           </div>
         </form>
       </div>
@@ -186,9 +186,9 @@ include __DIR__ . '/../includes/navbar.php';
       <div class="card">
         <h3>Quick Links</h3>
         <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;">
-          <a href="<?php echo BASE_URL; ?>questions/list.php" class="tag-chip" style="text-align:center;display:block;">Browse Questions</a>
-          <a href="<?php echo BASE_URL; ?>modules/list.php" class="tag-chip" style="text-align:center;display:block;">View Modules</a>
-          <a href="<?php echo BASE_URL; ?>tags/list.php" class="tag-chip" style="text-align:center;display:block;">Browse Tags</a>
+          <a href="<?php echo BASE_URL; ?>questions/list.php" class="tag-chip tag-chip-block">Browse Questions</a>
+          <a href="<?php echo BASE_URL; ?>modules/list.php" class="tag-chip tag-chip-block">View Modules</a>
+          <a href="<?php echo BASE_URL; ?>tags/list.php" class="tag-chip tag-chip-block">Browse Tags</a>
         </div>
       </div>
     </aside>

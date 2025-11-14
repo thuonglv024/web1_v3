@@ -9,7 +9,7 @@ if ($id > 0) {
   if ($row && (is_admin() || (is_logged_in() && (int)$row['user_id'] === (int)$_SESSION['user_id']))) {
     $stmt = $pdo->prepare("DELETE FROM questions WHERE id = ?");
     $stmt->execute([$id]);
-    $_SESSION['flash_message'] = 'Câu hỏi đã được xóa thành công!';
+    $_SESSION['flash_message'] = 'Question deleted successfully!';
     $_SESSION['flash_type'] = 'success';
   } else {
     http_response_code(403);

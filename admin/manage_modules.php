@@ -85,8 +85,8 @@ include __DIR__ . '/../includes/navbar.php';
                     <td><?php echo e($m['module_name']); ?></td>
                     <td><?php echo date('d M Y', strtotime($m['created_at'])); ?></td>
                     <td class="table-actions">
-                      <a href="<?php echo BASE_URL; ?>modules/edit.php?id=<?php echo (int)$m['module_id']; ?>" class="tag-chip">Edit</a>
-                      <a href="<?php echo BASE_URL; ?>modules/delete.php?id=<?php echo (int)$m['module_id']; ?>" class="tag-chip" style="border-color:#dc2626;" onclick="return confirm('Delete this module? This will affect all questions associated with it.')">Delete</a>
+                      <a href="<?php echo BASE_URL; ?>modules/edit.php?id=<?php echo (int)$m['module_id']; ?>" class="tag-chip tag-chip-small">Edit</a>
+                      <a href="<?php echo BASE_URL; ?>modules/delete.php?id=<?php echo (int)$m['module_id']; ?>" class="tag-chip tag-chip-small tag-chip-delete" onclick="return confirm('Delete this module? This will affect all questions associated with it.')">Delete</a>
                     </td>
                   </tr>
                 <?php endforeach; ?>

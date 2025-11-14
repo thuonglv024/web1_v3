@@ -52,7 +52,9 @@ try {
     $newState = $type;
   }
 
-  $score = (int)$pdo->query("SELECT COALESCE(SUM(value),0) FROM question_votes WHERE question_id=".$qid)->fetchColumn();
+  $scoreStmt = $pdo->prepare("SELECT COALESCE(SUM(value),0) FROM question_votes WHERE question_id=?");
+  $scoreStmt->execute([$qid]);
+  $score = (int)$scoreStmt->fetchColumn();
   $pdo->commit();
   echo json_encode(['ok'=>true,'score'=>$score,'state'=>$newState]);
 } catch (Throwable $e) {

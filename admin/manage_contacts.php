@@ -6,7 +6,7 @@
 
 require_once __DIR__ . '/../includes/functions.php';
 
-// Sử dụng PHPMailer từ thư mục assets
+// Use PHPMailer from assets directory
 require_once __DIR__ . '/../assets/phpmailer/PHPMailer.php';
 require_once __DIR__ . '/../assets/phpmailer/SMTP.php';
 require_once __DIR__ . '/../assets/phpmailer/Exception.php';
@@ -22,20 +22,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_email'])) {
     $to = $_POST['to_email'];
     $subject = $_POST['subject'];
     $message = $_POST['message'];
-    $from = 'thuong.workspace@gmail.com';
-    $from_name = 'Admin';
+    $from = ADMIN_EMAIL;
+    $from_name = APP_NAME . ' Admin';
 
     $mail = new PHPMailer(true);
     
     try {
         // Server settings
         $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
+        $mail->Host = SMTP_HOST;
         $mail->SMTPAuth = true;
-        $mail->Username = 'thuonglv.workspace@gmail.com';
-        $mail->Password = 'bwapxnrsfhzsbuyg'; // You need to use App Password from Google Account
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = 587;
+        $mail->Username = SMTP_USER;
+        $mail->Password = SMTP_PASS;
+        $mail->SMTPSecure = SMTP_SECURE === 'tls' ? PHPMailer::ENCRYPTION_STARTTLS : PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port = SMTP_PORT;
         $mail->CharSet = 'UTF-8';
 
         // Recipients
@@ -49,10 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_email'])) {
         $mail->AltBody = $message;
 
         $mail->send();
-        $_SESSION['flash_message'] = 'Email đã được gửi thành công!';
+        $_SESSION['flash_message'] = 'Email sent successfully!';
         $_SESSION['flash_type'] = 'success';
     } catch (Exception $e) {
-        $_SESSION['flash_message'] = "Không thể gửi email. Lỗi: {$mail->ErrorInfo}";
+        $_SESSION['flash_message'] = "Failed to send email. Error: {$mail->ErrorInfo}";
         $_SESSION['flash_type'] = 'error';
     }
     
@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_email'])) {
 if (isset($_GET['delete'])) {
   $id = (int)$_GET['delete'];
   $pdo->prepare("DELETE FROM contacts WHERE id=?")->execute([$id]);
-  $_SESSION['flash_message'] = 'Tin nhắn đã được xóa!';
+  $_SESSION['flash_message'] = 'Message deleted successfully!';
   $_SESSION['flash_type'] = 'success';
   redirect('admin/manage_contacts.php');
 }
@@ -127,14 +127,12 @@ include __DIR__ . '/../includes/navbar.php';
                 <div style="display:flex;gap:8px;">
                   <?php if (!$c['is_read']): ?>
                     <a href="<?php echo BASE_URL; ?>admin/manage_contacts.php?mark_read=<?php echo (int)$c['id']; ?>" 
-                       class="tag-chip" 
-                       style="padding:6px 12px;font-size:12px;background:#22c55e;border-color:#22c55e;color:#0b1220;">
+                       class="tag-chip tag-chip-small tag-chip-success">
                       Mark Read
                     </a>
                   <?php endif; ?>
                   <a href="<?php echo BASE_URL; ?>admin/manage_contacts.php?delete=<?php echo (int)$c['id']; ?>" 
-                     class="tag-chip" 
-                     style="padding:6px 12px;font-size:12px;border-color:#dc2626;" 
+                     class="tag-chip tag-chip-small tag-chip-delete" 
                      onclick="return confirm('Delete this message?')">
                     Delete
                   </a>

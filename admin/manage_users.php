@@ -49,8 +49,8 @@ include __DIR__ . '/../includes/navbar.php';
                     <span class="role-badge <?php echo $roleClass; ?>"><?php echo e($u['role']); ?></span>
                   </td>
                   <td class="table-actions">
-                    <a href="<?php echo BASE_URL; ?>users/edit.php?id=<?php echo (int)$u['id']; ?>" class="tag-chip">Edit</a>
-                    <a href="<?php echo BASE_URL; ?>users/delete.php?id=<?php echo (int)$u['id']; ?>" class="tag-chip" style="border-color:#dc2626;" onclick="return confirm('Delete this user?')">Delete</a>
+                    <a href="<?php echo BASE_URL; ?>users/edit.php?id=<?php echo (int)$u['id']; ?>" class="tag-chip tag-chip-small">Edit</a>
+                    <a href="<?php echo BASE_URL; ?>users/delete.php?id=<?php echo (int)$u['id']; ?>" class="tag-chip tag-chip-small tag-chip-delete" onclick="return confirm('Delete this user?')">Delete</a>
                   </td>
                 </tr>
               <?php endforeach; ?>

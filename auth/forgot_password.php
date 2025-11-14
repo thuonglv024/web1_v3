@@ -1,9 +1,18 @@
 <?php
 require_once __DIR__ . '/../includes/functions.php';
 
-// Handle forgot password form submission (TODO: implement)
+// Handle forgot password form submission
+// Note: Password reset functionality is not yet implemented
+// This is a placeholder for future implementation
 if (isPost()) {
-  // TODO: handle password reset request
+  $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
+  if ($email) {
+    // Future implementation: Generate reset token, send email, store token in database
+    // For now, just show a message
+    $_SESSION['flash_message'] = 'Password reset functionality is not yet available. Please contact the administrator.';
+    $_SESSION['flash_type'] = 'info';
+    redirect('auth/login.php');
+  }
 }
 
 // Fetch sidebar data

@@ -14,35 +14,51 @@ if (isPost()) {
     if (!$message) $errors['message'] = 'The field is required';
     $error = 'Please correct the highlighted fields.';
   } else {
+    // Insert contact message into database
     $stmt = $pdo->prepare("INSERT INTO contacts (name, email, message) VALUES (?,?,?)");
     $stmt->execute([$name, $email, $message]);
-    // Try sending an email using EmailService
-    $emailService = new EmailService();
+    
+    // Try to send email notification (optional)
     $subject = '[Q&A Contact] New message from ' . $name;
     $messageBody = "Name: $name\nEmail: $email\n\n$message";
     
-    // Send email using the service
-    $result = $emailService->sendCustomEmail(
-        ADMIN_EMAIL,
-        $subject,
-        nl2br(htmlspecialchars($messageBody)), // Convert newlines to <br> for HTML email
-        'Website Contact Form',
-        $email,
-        $name
-    );
-    
-    $sent = $result['success'];
-    
-    // Log any errors
-    if (!$sent) {
-        error_log('Mailer Error: ' . $result['message']);
+    // Try using PHPMailer if available
+    $emailSent = false;
+    if (file_exists(__DIR__ . '/../assets/phpmailer/PHPMailer.php')) {
+      try {
+        require_once __DIR__ . '/../assets/phpmailer/PHPMailer.php';
+        require_once __DIR__ . '/../assets/phpmailer/SMTP.php';
         
-        // Fallback to PHP mail() if EmailService fails
-        $headers = "From: $name <$email>\r\n";
-        $headers .= "Reply-To: $email\r\n";
-        $headers .= "X-Mailer: PHP/" . phpversion();
-        $sent = mail(ADMIN_EMAIL, $subject, $message, $headers);
+        $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+        $mail->isSMTP();
+        $mail->Host = SMTP_HOST;
+        $mail->SMTPAuth = true;
+        $mail->Username = SMTP_USER;
+        $mail->Password = SMTP_PASS;
+        $mail->SMTPSecure = SMTP_SECURE;
+        $mail->Port = SMTP_PORT;
+        
+        $mail->setFrom($email, $name);
+        $mail->addAddress(ADMIN_EMAIL);
+        $mail->Subject = $subject;
+        $mail->Body = nl2br(htmlspecialchars($messageBody));
+        $mail->isHTML(true);
+        
+        $emailSent = $mail->send();
+      } catch (Exception $e) {
+        error_log('PHPMailer Error: ' . $e->getMessage());
+      }
     }
+    
+    // Fallback to PHP mail() if PHPMailer not available or failed
+    if (!$emailSent) {
+      $headers = "From: $name <$email>\r\n";
+      $headers .= "Reply-To: $email\r\n";
+      $headers .= "X-Mailer: PHP/" . phpversion();
+      $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+      @mail(ADMIN_EMAIL, $subject, $messageBody, $headers);
+    }
+    
     $success = 'Your message has been sent. Thank you!';
   }
 }

@@ -13,10 +13,10 @@ if (isset($_POST['send'])) {
             $icon = $result['success'] ? '✅' : '❌';
             echo "<p style='$style'>$icon {$result['message']}</p>";
         } catch (Exception $e) {
-            echo "<p style='color:red;'>❌ Có lỗi xảy ra: " . htmlspecialchars($e->getMessage()) . "</p>";
+            echo "<p style='color:red;'>❌ An error occurred: " . htmlspecialchars($e->getMessage()) . "</p>";
         }
     } else {
-        echo "<p style='color:red;'>Địa chỉ email không hợp lệ.</p>";
+        echo "<p style='color:red;'>Invalid email address.</p>";
     }
 }
 ?>

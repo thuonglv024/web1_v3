@@ -67,7 +67,7 @@ include __DIR__ . '/../includes/navbar.php';
                     </td>
                     <td class="table-actions">
                       <a href="<?php echo BASE_URL; ?>tags/delete.php?id=<?php echo (int)$t['id']; ?>" 
-                         class="tag-chip delete-tag" 
+                         class="tag-chip tag-chip-delete" 
                          onclick="return confirm('Are you sure you want to delete this tag?')">
                         <i class="fas fa-trash-alt" style="margin-right:4px;"></i> Delete
                       </a>
