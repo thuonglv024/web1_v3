@@ -169,8 +169,11 @@ include __DIR__ . '/../includes/navbar.php';
                             style="padding:8px 16px; background:#3b82f6; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:500;">
                       Send Email
                     </button>
-                    <button type="button" onclick="toggleReplyForm(<?php echo $c['id']; ?>)" 
-                            style="padding:8px 16px; margin-left:8px; background:#6b7280; color:white; border:none; border-radius:4px; cursor:pointer;">
+                    <button type="button" 
+                            onclick="toggleReplyForm(<?php echo $c['id']; ?>)" 
+                            onmouseover="this.style.background='#ef4444'; this.style.color='white'"
+                            onmouseout="this.style.background='#6b7280'; this.style.color='white'"
+                            style="padding:8px 16px; background:#6b7280; color:white; border:none; border-radius:4px; cursor:pointer; transition: all 0.2s ease;">
                       Cancel
                     </button>
                   </form>

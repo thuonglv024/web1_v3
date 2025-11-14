@@ -2,7 +2,43 @@
 <nav class="navbar">
   <div class="container">
     <!-- Helper function to check if URI contains a string for active class -->
-    <?php $uri = $_SERVER['REQUEST_URI'] ?? '/'; $is = function(string $p) use ($uri){ return strpos($uri, $p) !== false ? 'active' : ''; }; ?>
+    <?php 
+    $uri = $_SERVER['REQUEST_URI'] ?? '/';
+    $current_path = parse_url($uri, PHP_URL_PATH);
+    
+    // Xác định trang hiện tại
+    $is_home = ($current_path === '/' || $current_path === BASE_URL || $current_path === '/COMP1841/courseworkWeb1V2/');
+    
+    // Function to check active state
+    $is = function($path) use ($current_path, $is_home) {
+        // Handle home page
+        if ($path === BASE_URL) {
+            return $is_home ? 'active' : '';
+        }
+        
+        // Remove trailing slashes and BASE_URL for comparison
+        $current = trim(str_replace(BASE_URL, '', $current_path), '/');
+        $path = trim($path, '/');
+        
+        // For admin section
+        if ($path === 'admin' || $path === 'admin/') {
+            return (strpos($current, 'admin') === 0) ? 'active' : '';
+        }
+        
+        // For questions section
+        if ($path === 'questions' || $path === 'questions/') {
+            return (strpos($current, 'questions') === 0) ? 'active' : '';
+        }
+        
+        // For contact section
+        if ($path === 'contact' || $path === 'contact/contact.php') {
+            return (strpos($current, 'contact') === 0) ? 'active' : '';
+        }
+        
+        // Direct match for other pages
+        return ($current === $path) ? 'active' : '';
+    };
+    ?>
     <!-- Brand link -->
     <a href="<?php echo BASE_URL; ?>" class="brand"><?php echo e(APP_NAME); ?></a>
     <!-- Main navigation links -->

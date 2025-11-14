@@ -52,32 +52,62 @@ if (isPost()) {
 include __DIR__ . '/../includes/header.php';
 include __DIR__ . '/../includes/navbar.php';
 ?>
-<main class="container">
-  <h1>Edit Question</h1>
-  <?php if ($error) alert($error, 'error'); ?>
-  <form method="post" enctype="multipart/form-data">
-    <label>Title <input name="title" value="<?php echo e($q['title']); ?>" required></label>
-    <label>Module
-      <select name="module_id" required>
-        <?php foreach($modules as $m): $sel = ($m['module_id']==$q['module_id'])?'selected':''; ?>
-          <option value="<?php echo (int)$m['module_id']; ?>" <?php echo $sel; ?>><?php echo e($m['module_name']); ?></option>
-        <?php endforeach; ?>
-      </select>
-    </label>
-    <label>Body <textarea name="body" rows="6" required><?php echo e($q['content']); ?></textarea></label>
-    <label>Image <input type="file" name="image" accept="image/*"></label>
-    <?php if (!empty($q['image'])): ?>
-      <p>Current: <img src="<?php echo BASE_URL; ?>assets/uploads/posts/<?php echo e($q['image']); ?>" alt="" style="height:80px"></p>
+<main class="container home-dark">
+  <div class="edit-form">
+    <h1>Edit Question</h1>
+    
+    <?php if ($error): ?>
+      <div class="alert alert-error"><?php echo $error; ?></div>
     <?php endif; ?>
-    <fieldset>
-      <legend>Tags</legend>
-      <?php foreach($allTags as $t): $checked = in_array((int)$t['id'], $selectedTagIds, true) ? 'checked' : ''; ?>
-        <label style="display:inline-block;margin-right:12px;">
-          <input type="checkbox" name="tags[]" value="<?php echo (int)$t['id']; ?>" <?php echo $checked; ?>> <?php echo e($t['name']); ?>
-        </label>
-      <?php endforeach; ?>
-    </fieldset>
-    <button class="primary" type="submit">Save</button>
-  </form>
+    
+    <form method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" value="<?php echo e($q['title']); ?>" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="module_id">Module</label>
+        <select id="module_id" name="module_id" required>
+          <?php foreach($modules as $m): $sel = ($m['module_id']==$q['module_id'])?'selected':''; ?>
+            <option value="<?php echo (int)$m['module_id']; ?>" <?php echo $sel; ?>><?php echo e($m['module_name']); ?></option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="body">Body</label>
+        <textarea id="body" name="body" rows="8" required><?php echo e($q['content']); ?></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" id="image" name="image" accept="image/*">
+        <?php if (!empty($q['image'])): ?>
+          <div class="current-image">
+            <img src="<?php echo BASE_URL; ?>assets/uploads/posts/<?php echo e($q['image']); ?>" alt="Current image">
+            <span>Current image</span>
+          </div>
+        <?php endif; ?>
+      </div>
+      
+      <fieldset class="form-group">
+        <legend>Tags</legend>
+        <div class="checkbox-group">
+          <?php foreach($allTags as $t): $checked = in_array((int)$t['id'], $selectedTagIds, true) ? 'checked' : ''; ?>
+            <label>
+              <input type="checkbox" name="tags[]" value="<?php echo (int)$t['id']; ?>" <?php echo $checked; ?>>
+              <span><?php echo e($t['name']); ?></span>
+            </label>
+          <?php endforeach; ?>
+        </div>
+      </fieldset>
+      
+      <div class="form-actions">
+        <a href="<?php echo BASE_URL; ?>questions/view.php?id=<?php echo (int)$q['id']; ?>" class="btn-cancel">Cancel</a>
+        <button type="submit" class="btn-submit">Save Changes</button>
+      </div>
+    </form>
+  </div>
 </main>
 <?php include __DIR__ . '/../includes/footer.php'; ?>
